@@ -477,6 +477,12 @@
 	int i = 0;
 	for (NSNumber *value in values) {
 		CGFloat segmentHeight = [value floatValue];
+
+        // seemed to crash when segmentHeight was NaN so if NaN set to 10 (why 10 -- no idea what it should be so just picked 10)
+        if isnan(segmentHeight) {
+            segmentHeight = 10.0;
+        }
+        
 		y -= segmentHeight;
 		CGRect segmentFrame = CGRectMake(x, y, width, segmentHeight);
 		UIView *segmentView = [segmentViews objectAtIndex:i];
