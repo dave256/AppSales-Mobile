@@ -11,6 +11,7 @@
 #import "Product.h"
 #import "CurrencyManager.h"
 #import "ReportDetailEntry.h"
+#import <math.h>
 
 @implementation ReportDetailEntryCell
 
@@ -89,7 +90,15 @@
 	
 	if (!hideBar) {
 		percentageLabel.text = [percentageFormatter stringFromNumber:[NSNumber numberWithFloat:percentage]];
-		barView.frame = CGRectMake(0, 0, barBackgroundView.bounds.size.width * MAX(percentage, 0.0), 17);
+        CGFloat width = barBackgroundView.bounds.size.width;
+        if (isnan(width)) {
+            width = 20.0;
+        }
+        if isnan(percentage) {
+            percentage = 20.0;
+        }
+        CGRect barViewFrame = CGRectMake(0, 0, width * MAX(percentage, 0.0), 17);
+        barView.frame = barViewFrame;
 	}
 	
 	if (product) {
